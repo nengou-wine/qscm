@@ -179,3 +179,79 @@ if __name__ == "__main__":
 - **τ_norm** reflects *how heavy the hesitation was*  
 - **τ_ref** encodes the *ethical baseline of human thinking time*  
 - **ε** exists purely to keep the model mathematically safe
+
+---
+
+## Acceptance Tests (Reference Benchmarks)
+
+The following reference cases are provided to allow **instant validation**
+of any implementation of QSCM.
+
+All values are illustrative but internally consistent.
+
+---
+
+### Case A: Low Friction (Ideal / Silent Path)
+
+A highly focused information space with minimal branching and hesitation.
+
+- ρ = 0.10
+- τ = 30s
+- τ_ref = 100s → τ_norm = 0.30
+- σ = 0.05
+- ε ≈ 0
+
+Φ = 1 / (0.10 + 0.30 + 0.05)  
+Φ ≈ **2.22**
+
+**Expected interpretation**  
+- Very low friction  
+- Near-silent decision flow  
+- Strong alignment between structure and user intent
+
+---
+
+### Case B: Moderate Friction (Typical / Balanced)
+
+A realistic decision environment with some exploration and uncertainty.
+
+- ρ = 0.40
+- τ = 80s
+- τ_ref = 100s → τ_norm = 0.80
+- σ = 0.30
+- ε ≈ 0
+
+Φ = 1 / (0.40 + 0.80 + 0.30)  
+Φ ≈ **0.67**
+
+**Expected interpretation**  
+- Moderate friction  
+- Thoughtful but slightly noisy decision process  
+- Acceptable operational balance
+
+---
+
+### Case C: High Friction (Noisy / Broken Path)
+
+A fragmented structure with excessive hesitation and drop-off.
+
+- ρ = 1.20
+- τ = 180s
+- τ_ref = 100s → τ_norm = 1.80
+- σ = 0.90
+- ε ≈ 0
+
+Φ = 1 / (1.20 + 1.80 + 0.90)  
+Φ ≈ **0.25**
+
+**Expected interpretation**  
+- Severe friction  
+- Cognitive overload or structural mismatch  
+- System requires redesign or pruning
+
+---
+
+These benchmarks serve as **falsifiable reference points**.
+Any correct implementation should reproduce values
+within a small numerical tolerance.
+

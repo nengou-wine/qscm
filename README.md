@@ -11,6 +11,83 @@ to ensure that each source of friction is **explicit, comparable, and falsifiabl
 
 ---
 
+---
+
+## Acceptance Tests (Benchmark Cases)
+
+The following benchmark cases are provided to verify correct implementation
+of the QSCM formula.
+
+An implementation is considered **valid** if it reproduces the Silence Index (Φ)
+values below within ±0.001 tolerance.
+
+### Formula
+
+Φ = 1 / (ρ + τ_norm + σ + ε)  
+where τ_norm = τ / τ_ref, τ_ref = 100 seconds, ε ≈ 1e-6
+
+---
+
+### Case A — Low Friction (Ideal / Superconductive)
+
+Represents a well-structured information space with
+clear intent resolution and minimal real-world failure.
+
+| Variable | Value |
+|--------|-------|
+| ρ (rho) | 1.1 |
+| τ (seconds) | 25 |
+| τ_norm | 0.25 |
+| σ (sigma) | 0.05 |
+
+Expected result:
+
+Φ ≈ **0.714**
+
+---
+
+### Case B — Structural Noise (Digital Confusion)
+
+Represents excessive branching and prolonged hesitation
+caused by structural ambiguity.
+
+| Variable | Value |
+|--------|-------|
+| ρ (rho) | 4.5 |
+| τ (seconds) | 180 |
+| τ_norm | 1.80 |
+| σ (sigma) | 0.15 |
+
+Expected result:
+
+Φ ≈ **0.155**
+
+---
+
+### Case C — Physical Bottleneck (Real-World Failure)
+
+Represents a clean digital path where intent fails to
+materialize due to inventory, logistics, or operational constraints.
+
+| Variable | Value |
+|--------|-------|
+| ρ (rho) | 2.2 |
+| τ (seconds) | 60 |
+| τ_norm | 0.60 |
+| σ (sigma) | 0.60 |
+
+Expected result:
+
+Φ ≈ **0.294**
+
+---
+
+### Verification Rule
+
+Any independent implementation (Python, R, SQL, etc.)
+must reproduce the above Φ values to be considered compliant
+with the QSCM specification.
+
 ### Variables
 
 - **ρ (rho)**  

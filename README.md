@@ -1,334 +1,84 @@
+# QSCM: Quality of Silence Control Model
+
+Measuring decision friction in large-scale information spaces using ρ, τ, and σ.
+
+> **Status**
+> This project is published during an active scaling phase (e.g., 200k+ URLs observed, expanding toward much larger spaces). [cite: 2026-01-01]
+> The goal is not to claim completion, but to provide a **falsifiable** measurement protocol.
+
+---
+
+## TL;DR
+
+- **Formula:** $\Phi = 1 / (\rho + \tau_{norm} + \sigma + \epsilon)$
+- **Inputs:** Exportable logs (GSC/GA4)
+- **Stance:** Published for **falsification**, not validation
+- **Fast check:** run `example.py` and confirm Acceptance Tests
+
+---
+
 ## Formula
 
 QSCM defines the **Silence Index (Φ)** as the inverse of total decision friction:
 
 ```text
 Φ = 1 / (ρ + τ_norm + σ + ε)
+This formulation intentionally uses a simple inverse-sum structure to ensure that each source of friction is explicit, comparable, and falsifiable. [cite: 2026-01-01]Variablesρ (rho): Branching density / structural dispersion (e.g. query → multiple-page click dispersion). [cite: 2026-01-01]τ_norm (normalized decision latency): Human decision time, normalized to a reference duration. [cite: 2026-01-01]σ (sigma): Real-world uncertainty or drop-off probability (e.g. checkout started but not completed). [cite: 2026-01-01]ε (epsilon): A sufficiently small constant for numerical stability (≈ 1e-6). [cite: 2025-12-29]NormalizationDecision time is normalized as follows:Plaintextτ_norm = τ / τ_ref
+Where:τ (tau): Median decision time in seconds (e.g. entry → checkout or purchase). [cite: 2026-01-01]τ_ref (reference time): Reference decision duration (Default: 100 seconds). [cite: 2026-01-01]This normalization makes decision latency dimensionless and directly comparable with ρ and σ. [cite: 2026-01-01]InterpretationLarger Φ: Lower overall friction → A more “silent” and decisive information path. [cite: 2026-01-01]Smaller Φ: Higher friction → Increased noise, hesitation, or operational mismatch. [cite: 2026-01-01]Practical Meaningτ_norm reflects how heavy the hesitation was. [cite: 2026-01-01]τ_ref encodes the ethical baseline of human thinking time. [cite: 2025-12-27, 2026-01-01]ε exists purely to keep the model mathematically safe (avoid division by zero). [cite: 2025-12-29]Acceptance Tests (A / B / C)Implementation is considered valid if it reproduces the following values (rounded to 3 decimals).Assumptions: τ_ref = 100, ε = 1e-6Patternρ (rho)τ (sec)σ (sigma)Expected ΦA (Low friction)1.1250.050.714B (Structural noise)4.51800.150.155C (Operational mismatch)2.2600.600.294
 
+Quick Start
+Bash
 
-This formulation intentionally uses a simple inverse-sum structure
-to ensure that each source of friction is **explicit, comparable, and falsifiable**.
+python example.py
+You should see the Acceptance Tests printed with matching outputs.
+
+Feedback Loop (Issues)
+This project prioritizes falsifiability over confirmation. [cite: 2026-01-01] If your measurements contradict this model, please open an Issue with your context (e.g., e-commerce vs. content media, session definition, conversion definition).
+
+License
+MIT License
+
 
 ---
 
----
-
-## Acceptance Tests (Benchmark Cases)
-
-The following benchmark cases are provided to verify correct implementation
-of the QSCM formula.
-
-An implementation is considered **valid** if it reproduces the Silence Index (Φ)
-values below within ±0.001 tolerance.
-
-### Formula
-
-Φ = 1 / (ρ + τ_norm + σ + ε)  
-where τ_norm = τ / τ_ref, τ_ref = 100 seconds, ε ≈ 1e-6
-
----
-
-### Case A — Low Friction (Ideal / Superconductive)
-
-Represents a well-structured information space with
-clear intent resolution and minimal real-world failure.
-
-| Variable | Value |
-|--------|-------|
-| ρ (rho) | 1.1 |
-| τ (seconds) | 25 |
-| τ_norm | 0.25 |
-| σ (sigma) | 0.05 |
-
-Expected result:
-
-Φ ≈ **0.714**
-
----
-
-### Case B — Structural Noise (Digital Confusion)
-
-Represents excessive branching and prolonged hesitation
-caused by structural ambiguity.
-
-| Variable | Value |
-|--------|-------|
-| ρ (rho) | 4.5 |
-| τ (seconds) | 180 |
-| τ_norm | 1.80 |
-| σ (sigma) | 0.15 |
-
-Expected result:
-
-Φ ≈ **0.155**
-
----
-
-### Case C — Physical Bottleneck (Real-World Failure)
-
-Represents a clean digital path where intent fails to
-materialize due to inventory, logistics, or operational constraints.
-
-| Variable | Value |
-|--------|-------|
-| ρ (rho) | 2.2 |
-| τ (seconds) | 60 |
-| τ_norm | 0.60 |
-| σ (sigma) | 0.60 |
-
-Expected result:
-
-Φ ≈ **0.294**
-
----
-
-### Verification Rule
-
-Any independent implementation (Python, R, SQL, etc.)
-must reproduce the above Φ values to be considered compliant
-with the QSCM specification.
-
-### Variables
-
-- **ρ (rho)**  
-  Branching density / structural dispersion  
-  (e.g. query → multiple-page click dispersion in search results)
-
-- **τ_norm (normalized decision latency)**  
-  Human decision time, normalized to a reference duration
-
-- **σ (sigma)**  
-  Real-world uncertainty or drop-off probability  
-  (e.g. checkout started but not completed)
-
-- **ε (epsilon)**  
-  A sufficiently small constant for numerical stability
-
----
-
-### Normalization
-
-Decision time is normalized as follows:
-τ_norm = τ / τ_ref
-
-Where:
-
-- **τ (tau)**  
-  Median decision time in seconds  
-  (e.g. entry → checkout or purchase)
-
-- **τ_ref (reference time)**  
-  Reference decision duration  
-  Default: **100 seconds**
-
-- **ε (epsilon)**  
-  Assumed to be sufficiently small (≈ 1e-6)
-
-This normalization makes decision latency **dimensionless** and
-directly comparable with ρ and σ.
-
----
-
-### Interpretation
-
-- Larger **Φ**  
-  → Lower overall friction  
-  → A more “silent” and decisive information path
-
-- Smaller **Φ**  
-  → Higher friction  
-  → Increased noise, hesitation, or operational mismatch
-
----
-
-## QSCM — Quality of Silence Computational Model
-
-QSCM is a minimal, falsifiable model for measuring **decision friction**
-in large-scale information spaces.
-
-It defines a single scalar value — the **Silence Index (Φ)** —
-which quantifies how smoothly a user can move from intent to decision.
-
-The model is intentionally simple:
-- each source of friction is explicit,
-- each component is measurable,
-- and the result is reproducible from real logs.
-
-This repository provides:
-- the formal definition of Φ,
-- normalization rules,
-- and a reference implementation for verification.
-
-## Formula
-
-QSCM defines the **Silence Index (Φ)** as the inverse of total decision friction:
-
-Φ = 1 / (ρ + τ_norm + σ + ε)
-
-This formulation intentionally uses a simple inverse-sum structure
-to ensure that each source of friction is **explicit, comparable, and falsifiable**.
-
-### Variables
-
-- **ρ (rho)**  
-  Branching density / structural dispersion  
-  (e.g. query → multiple-page click dispersion in search results)
-
-- **τ_norm (normalized decision latency)**  
-  Human decision time, normalized to a reference duration
-
-- **σ (sigma)**  
-  Real-world uncertainty or drop-off probability  
-  (e.g. checkout started but not completed)
-
-- **ε (epsilon)**  
-  A sufficiently small constant for numerical stability
-
-### Interpretation
-
-- Larger **Φ**  
-  → Lower overall friction  
-  → A more “silent” and decisive information path
-
-- Smaller **Φ**  
-  → Higher friction  
-  → Increased noise, hesitation, or operational mismatch
-
-### Practical Meaning
-
-- **τ_norm** reflects *how heavy the hesitation was*
-- **τ_ref** encodes the *ethical baseline of human thinking time*
-- **ε** exists purely to keep the model mathematically safe
-
-## Acceptance Tests (Reference Values)
-
-The following examples provide reproducible reference values.
-
-Assume:
-- τ_ref = 100
-- ε = 0.000001
-
-### Case A — Low friction
-ρ = 0.20  
-τ = 30s → τ_norm = 0.30  
-σ = 0.10  
-
-Φ ≈ 1 / (0.20 + 0.30 + 0.10 + ε) ≈ **1.67**
-
-### Case B — Medium friction
-ρ = 0.40  
-τ = 80s → τ_norm = 0.80  
-σ = 0.20  
-
-Φ ≈ 1 / (1.40) ≈ **0.71**
-
-### Case C — High friction
-ρ = 0.80  
-τ = 150s → τ_norm = 1.50  
-σ = 0.40  
-
-Φ ≈ 1 / (2.70) ≈ **0.37**
-
-# example.py
-# Reference implementation of QSCM Silence Index
-
-EPSILON = 1e-6
-TAU_REF = 100.0
-
-def silence_index(rho, tau, sigma, tau_ref=TAU_REF, epsilon=EPSILON):
-    tau_norm = tau / tau_ref
-    return 1.0 / (rho + tau_norm + sigma + epsilon)
+## 2. example.py （新規ファイル用）
+GitHubで **Add file → Create new file** を選択し、ファイル名を `example.py` にして以下を貼り付けてください。
+
+```python
+def calculate_phi(rho, tau_sec, sigma, tau_ref=100.0, epsilon=1e-6):
+    """
+    Calculate the Silence Index (Phi) based on QSCM.
+    """
+    tau_norm = tau_sec / tau_ref
+    denom = rho + tau_norm + sigma + epsilon
+    return round(1.0 / denom, 3)
+
+def main():
+    # Acceptance Test Cases
+    tests = [
+        ("A: Low friction", 1.1, 25, 0.05, 0.714),
+        ("B: Structural noise", 4.5, 180, 0.15, 0.155),
+        ("C: Operational mismatch", 2.2, 60, 0.60, 0.294),
+    ]
+
+    print("--- QSCM Acceptance Tests ---")
+    all_passed = True
+    for name, rho, tau, sigma, expected in tests:
+        got = calculate_phi(rho, tau, sigma)
+        status = "PASS" if got == expected else "FAIL"
+        print(f"[{status}] {name}")
+        print(f"    Inputs: rho={rho}, tau={tau}s, sigma={sigma}")
+        print(f"    Result: {got} (Expected: {expected})")
+        
+        if got != expected:
+            all_passed = False
+
+    print("-----------------------------")
+    if all_passed:
+        print("Final Status: All Acceptance Tests passed.")
+    else:
+        print("Final Status: Tests failed. Check your logic.")
+        raise SystemExit(1)
 
 if __name__ == "__main__":
-    cases = {
-        "A": (0.20, 30, 0.10),
-        "B": (0.40, 80, 0.20),
-        "C": (0.80, 150, 0.40),
-    }
-
-    for name, (rho, tau, sigma) in cases.items():
-        phi = silence_index(rho, tau, sigma)
-        print(f"Case {name}: Φ = {phi:.2f}")
-
-
-### Practical Meaning
-
-- **τ_norm** reflects *how heavy the hesitation was*  
-- **τ_ref** encodes the *ethical baseline of human thinking time*  
-- **ε** exists purely to keep the model mathematically safe
-
----
-
-## Acceptance Tests (Reference Benchmarks)
-
-The following reference cases are provided to allow **instant validation**
-of any implementation of QSCM.
-
-All values are illustrative but internally consistent.
-
----
-
-### Case A: Low Friction (Ideal / Silent Path)
-
-A highly focused information space with minimal branching and hesitation.
-
-- ρ = 0.10
-- τ = 30s
-- τ_ref = 100s → τ_norm = 0.30
-- σ = 0.05
-- ε ≈ 0
-
-Φ = 1 / (0.10 + 0.30 + 0.05)  
-Φ ≈ **2.22**
-
-**Expected interpretation**  
-- Very low friction  
-- Near-silent decision flow  
-- Strong alignment between structure and user intent
-
----
-
-### Case B: Moderate Friction (Typical / Balanced)
-
-A realistic decision environment with some exploration and uncertainty.
-
-- ρ = 0.40
-- τ = 80s
-- τ_ref = 100s → τ_norm = 0.80
-- σ = 0.30
-- ε ≈ 0
-
-Φ = 1 / (0.40 + 0.80 + 0.30)  
-Φ ≈ **0.67**
-
-**Expected interpretation**  
-- Moderate friction  
-- Thoughtful but slightly noisy decision process  
-- Acceptable operational balance
-
----
-
-### Case C: High Friction (Noisy / Broken Path)
-
-A fragmented structure with excessive hesitation and drop-off.
-
-- ρ = 1.20
-- τ = 180s
-- τ_ref = 100s → τ_norm = 1.80
-- σ = 0.90
-- ε ≈ 0
-
-Φ = 1 / (1.20 + 1.80 + 0.90)  
-Φ ≈ **0.25**
-
-**Expected interpretation**  
-- Severe friction  
-- Cognitive overload or structural mismatch  
-- System requires redesign or pruning
-
----
-
-These benchmarks serve as **falsifiable reference points**.
-Any correct implementation should reproduce values
-within a small numerical tolerance.
-
+    main()

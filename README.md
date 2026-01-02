@@ -31,6 +31,8 @@ QSCM defines the **Silence Index (Φ)** as the inverse of total decision frictio
 
 ```text
 Φ = 1 / (ρ + τ_norm + σ + ε)
+```
+
 This formulation intentionally uses a simple inverse-sum structure to ensure that
 each source of friction is explicit, comparable, and falsifiable.
 [cite: 2026-01-01]

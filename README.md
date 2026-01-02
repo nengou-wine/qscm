@@ -1,35 +1,71 @@
-### Normalization Details
+## Formula
+
+QSCM defines the **Silence Index (Φ)** as the inverse of total decision friction:
+
+```text
+Φ = 1 / (ρ + τ_norm + σ + ε)
+
+
+This formulation intentionally uses a simple inverse-sum structure
+to ensure that each source of friction is **explicit, comparable, and falsifiable**.
+
+---
+
+### Variables
+
+- **ρ (rho)**  
+  Branching density / structural dispersion  
+  (e.g. query → multiple-page click dispersion in search results)
+
+- **τ_norm (normalized decision latency)**  
+  Human decision time, normalized to a reference duration
+
+- **σ (sigma)**  
+  Real-world uncertainty or drop-off probability  
+  (e.g. checkout started but not completed)
+
+- **ε (epsilon)**  
+  A sufficiently small constant for numerical stability
+
+---
+
+### Normalization
+
+Decision time is normalized as follows:
+τ_norm = τ / τ_ref
 
 Where:
 
-- **τ_norm = τ / τ_ref**
-- **τ_ref = 100 seconds (default)**
-- **ε (epsilon) ≈ 1e-6**
+- **τ (tau)**  
+  Median decision time in seconds  
+  (e.g. entry → checkout or purchase)
 
-#### Meaning
+- **τ_ref (reference time)**  
+  Reference decision duration  
+  Default: **100 seconds**
 
-- **τ (tau)** represents the actual decision time in seconds  
-  (e.g. time from entry to checkout or purchase).
+- **ε (epsilon)**  
+  Assumed to be sufficiently small (≈ 1e-6)
 
-- **τ_norm** is a normalized, dimensionless value that allows decision time  
-  to be compared fairly with other friction components (ρ and σ).
+This normalization makes decision latency **dimensionless** and
+directly comparable with ρ and σ.
 
-- **τ_ref (reference time)** defines what is considered a *natural thinking duration*  
-  in the given context.  
-  In this model, `τ_ref = 100s` reflects a high-involvement decision space  
-  (e.g. wine selection), where thoughtful consideration is expected and respected.
+---
 
-  Examples:
-  - τ = 25s  → τ_norm = 0.25  
-  - τ = 60s  → τ_norm = 0.60  
-  - τ = 180s → τ_norm = 1.80  
+### Interpretation
 
-- **ε (epsilon)** is a numerically negligible constant added for stability,  
-  preventing division-by-zero when all friction components approach zero.  
-  It has no practical impact on the resulting value of Φ.
+- Larger **Φ**  
+  → Lower overall friction  
+  → A more “silent” and decisive information path
 
-In short:
+- Smaller **Φ**  
+  → Higher friction  
+  → Increased noise, hesitation, or operational mismatch
 
-> τ_norm represents *how heavy the hesitation was*,  
-> τ_ref encodes *the ethical baseline of human thinking time*,  
-> and ε exists purely to keep the model mathematically safe.
+---
+
+### Practical Meaning
+
+- **τ_norm** reflects *how heavy the hesitation was*  
+- **τ_ref** encodes the *ethical baseline of human thinking time*  
+- **ε** exists purely to keep the model mathematically safe

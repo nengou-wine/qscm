@@ -123,12 +123,9 @@ If your measurements contradict this model, please open an Issue with your conte
 License
 MIT License
 
+example.py
 python
 コードをコピーする
-
----
-
-### example.py（そのまま貼り付け可）
 
 ```python
 def calculate_phi(rho, tau_sec, sigma, tau_ref=100.0, epsilon=1e-6):

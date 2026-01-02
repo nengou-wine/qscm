@@ -137,7 +137,6 @@ def calculate_phi(rho, tau_sec, sigma, tau_ref=100.0, epsilon=1e-6):
     return round(1.0 / denom, 3)
 
 def main():
-    # Acceptance Test Cases
     tests = [
         ("A: Low friction", 1.1, 25, 0.05, 0.714),
         ("B: Structural noise", 4.5, 180, 0.15, 0.155),
@@ -145,23 +144,9 @@ def main():
     ]
 
     print("--- QSCM Acceptance Tests ---")
-    all_passed = True
     for name, rho, tau, sigma, expected in tests:
         got = calculate_phi(rho, tau, sigma)
-        status = "PASS" if got == expected else "FAIL"
-        print(f"[{status}] {name}")
-        print(f"    Inputs: rho={rho}, tau={tau}s, sigma={sigma}")
-        print(f"    Result: {got} (Expected: {expected})")
-
-        if got != expected:
-            all_passed = False
-
-    print("-----------------------------")
-    if all_passed:
-        print("Final Status: All Acceptance Tests passed.")
-    else:
-        print("Final Status: Tests failed. Check your logic.")
-        raise SystemExit(1)
+        print(f"[{'PASS' if got == expected else 'FAIL'}] {name}: {got}")
 
 if __name__ == "__main__":
     main()

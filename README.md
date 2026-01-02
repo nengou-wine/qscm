@@ -32,22 +32,27 @@ QSCM defines the **Silence Index (Φ)** as the inverse of total decision frictio
 ```text
 Φ = 1 / (ρ + τ_norm + σ + ε)
 This formulation intentionally uses a simple inverse-sum structure to ensure that
-each source of friction is explicit, comparable, and falsifiable. [cite: 2026-01-01]
+each source of friction is explicit, comparable, and falsifiable.
+[cite: 2026-01-01]
 
 Variables
 ρ (rho)
 Branching density / structural dispersion
-(e.g. query → multiple-page click dispersion). [cite: 2026-01-01]
+(e.g. query → multiple-page click dispersion).
+[cite: 2026-01-01]
 
 τ_norm (normalized decision latency)
-Human decision time, normalized to a reference duration. [cite: 2026-01-01]
+Human decision time, normalized to a reference duration.
+[cite: 2026-01-01]
 
 σ (sigma)
 Real-world uncertainty or drop-off probability
-(e.g. checkout started but not completed). [cite: 2026-01-01]
+(e.g. checkout started but not completed).
+[cite: 2026-01-01]
 
 ε (epsilon)
-A sufficiently small constant for numerical stability (≈ 1e-6). [cite: 2025-12-29]
+A sufficiently small constant for numerical stability (≈ 1e-6).
+[cite: 2025-12-29]
 
 Normalization
 Decision time is normalized as follows:
@@ -59,13 +64,16 @@ Where:
 
 τ (tau)
 Median decision time in seconds
-(e.g. entry → checkout or purchase). [cite: 2026-01-01]
+(e.g. entry → checkout or purchase).
+[cite: 2026-01-01]
 
 τ_ref (reference time)
-Reference decision duration (Default: 100 seconds). [cite: 2026-01-01]
+Reference decision duration (Default: 100 seconds).
+[cite: 2026-01-01]
 
 This normalization makes decision latency dimensionless and directly comparable
-with ρ and σ. [cite: 2026-01-01]
+with ρ and σ.
+[cite: 2026-01-01]
 
 Interpretation
 Larger Φ
@@ -77,13 +85,15 @@ Higher friction → Increased noise, hesitation, or operational mismatch.
 [cite: 2026-01-01]
 
 Practical Meaning
-τ_norm reflects how heavy the hesitation was. [cite: 2026-01-01]
+τ_norm reflects how heavy the hesitation was.
+[cite: 2026-01-01]
 
 τ_ref encodes the ethical baseline of human thinking time.
 [cite: 2025-12-27, 2026-01-01]
 
 ε exists purely to keep the model mathematically safe
-(avoid division by zero). [cite: 2025-12-29]
+(avoid division by zero).
+[cite: 2025-12-29]
 
 Acceptance Tests (A / B / C)
 Implementation is considered valid if it reproduces the following values
@@ -104,7 +114,8 @@ python example.py
 You should see the Acceptance Tests printed with matching outputs.
 
 Feedback Loop (Issues)
-This project prioritizes falsifiability over confirmation. [cite: 2026-01-01]
+This project prioritizes falsifiability over confirmation.
+[cite: 2026-01-01]
 
 If your measurements contradict this model, please open an Issue with your context
 (e.g., e-commerce vs. content media, session definition, conversion definition).
@@ -117,7 +128,7 @@ python
 
 ---
 
-### example.py（そのまま使用可）
+### example.py（そのまま貼り付け可）
 
 ```python
 def calculate_phi(rho, tau_sec, sigma, tau_ref=100.0, epsilon=1e-6):

@@ -37,7 +37,7 @@ This formulation intentionally uses a simple inverse-sum structure to ensure tha
 each source of friction is explicit, comparable, and falsifiable.
 [cite: 2026-01-01]
 
-Variables
+## Variables
 ρ (rho)
 Branching density / structural dispersion
 (e.g. query → multiple-page click dispersion).
@@ -56,10 +56,10 @@ Real-world uncertainty or drop-off probability
 A sufficiently small constant for numerical stability (≈ 1e-6).
 [cite: 2025-12-29]
 
-Normalization
+## Normalization
 Decision time is normalized as follows:
 
-text
+```text
 τ_norm = τ / τ_ref
 Where:
 
@@ -76,7 +76,7 @@ This normalization makes decision latency dimensionless and directly comparable
 with ρ and σ.
 [cite: 2026-01-01]
 
-Interpretation
+## Interpretation
 Larger Φ
 Lower overall friction → A more “silent” and decisive information path.
 [cite: 2026-01-01]
@@ -85,7 +85,7 @@ Smaller Φ
 Higher friction → Increased noise, hesitation, or operational mismatch.
 [cite: 2026-01-01]
 
-Practical Meaning
+## Practical Meaning
 τ_norm reflects how heavy the hesitation was.
 [cite: 2026-01-01]
 
@@ -96,17 +96,18 @@ Practical Meaning
 (avoid division by zero).
 [cite: 2025-12-29]
 
-Acceptance Tests (A / B / C)
+## Acceptance Tests (A / B / C)
 Implementation is considered valid if it reproduces the following values
 (rounded to 3 decimals).
 
 Assumptions:
 τ_ref = 100, ε = 1e-6
 
-Pattern	ρ (rho)	τ (sec)	σ (sigma)	Expected Φ
-A (Low friction)	1.1	25	0.05	0.714
-B (Structural noise)	4.5	180	0.15	0.155
-C (Operational mismatch)	2.2	60	0.60	0.294
+| Pattern | ρ (rho) | τ (sec) | σ (sigma) | Expected Φ |
+|--------|--------:|--------:|----------:|-----------:|
+| A (Low friction) | 1.1 | 25 | 0.05 | 0.714 |
+| B (Structural noise) | 4.5 | 180 | 0.15 | 0.155 |
+| C (Operational mismatch) | 2.2 | 60 | 0.60 | 0.294 |
 
 Quick Start
 bash

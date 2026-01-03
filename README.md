@@ -60,7 +60,6 @@ Normalization
 Decision time is normalized as follows:
 
 text
-コードをコピーする
 τ_norm = τ / τ_ref
 Where:
 
@@ -111,7 +110,6 @@ C (Operational mismatch)	2.2	60	0.60	0.294
 
 Quick Start
 bash
-コードをコピーする
 python example.py
 You should see the Acceptance Tests printed with matching outputs.
 
@@ -127,7 +125,6 @@ MIT License
 
 example.py
 python
-コードをコピーする
 
 ```python
 def calculate_phi(rho, tau_sec, sigma, tau_ref=100.0, epsilon=1e-6):

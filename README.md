@@ -61,6 +61,8 @@ Decision time is normalized as follows:
 
 ```text
 τ_norm = τ / τ_ref
+```
+
 Where:
 
 τ (tau)
